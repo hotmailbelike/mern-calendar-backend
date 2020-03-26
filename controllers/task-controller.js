@@ -20,8 +20,22 @@ router.post('/calendarApp', async (req, res) => {
 //edit task
 router.put('/calendarApp/:taskId', async (req, res) => {
 	try {
-		let task = await Task.findByIdAndUpdate(req.params.taskId, req.body, { new: true, runValidators: true });
+		let task = await Task.findByIdAndUpdate(req.params.taskId, req.body, { new: true, runValidators: true, useFindAndModify: false });
+
 		await task.save();
+		res.json(task);
+	} catch (error) {
+		return res.status(400).json({
+			error: errorHandler.getErrorMessage(err)
+		});
+	}
+});
+
+// delete task
+router.delete('/calendarApp/:taskId', async (req, res) => {
+	try {
+		let task = await Task.findByIdAndRemove(req.params.taskId, { useFindAndModify: false });
+		res.json(task);
 	} catch (error) {
 		return res.status(400).json({
 			error: errorHandler.getErrorMessage(err)
