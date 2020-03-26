@@ -43,4 +43,16 @@ router.delete('/calendarApp/:taskId', async (req, res) => {
 	}
 });
 
+//read task
+router.get('/calendarApp/:taskId', async (req, res) => {
+	try {
+		let task = await Task.find({ _id: req.params.taskId });
+		res.json(task);
+	} catch (error) {
+		return res.status(400).json({
+			error: errorHandler.getErrorMessage(err)
+		});
+	}
+});
+
 module.exports = router;
