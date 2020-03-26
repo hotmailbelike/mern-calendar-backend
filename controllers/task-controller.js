@@ -6,13 +6,16 @@ const Task = mongoose.model('Task');
 //create task
 router.post('/calendarApp', async (req, res) => {
 	const task = new Task(req.body);
+	// console.log(req.body);
 	try {
+		// console.log('try');
 		await task.save();
+		// console.log('save');
 		return res.status(200).json(task);
 	} catch (error) {
 		// console.log(error);
 		return res.status(400).json({
-			error: errorHandler.getErrorMessage(err)
+			error
 		});
 	}
 });
@@ -26,7 +29,7 @@ router.put('/calendarApp/:taskId', async (req, res) => {
 		res.json(task);
 	} catch (error) {
 		return res.status(400).json({
-			error: errorHandler.getErrorMessage(err)
+			error
 		});
 	}
 });
@@ -38,7 +41,7 @@ router.delete('/calendarApp/:taskId', async (req, res) => {
 		res.json(task);
 	} catch (error) {
 		return res.status(400).json({
-			error: errorHandler.getErrorMessage(err)
+			error
 		});
 	}
 });
@@ -50,7 +53,7 @@ router.get('/calendarApp/:taskId', async (req, res) => {
 		res.json(task);
 	} catch (error) {
 		return res.status(400).json({
-			error: errorHandler.getErrorMessage(err)
+			error
 		});
 	}
 });

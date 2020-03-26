@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
+app.use(cors());
+// app.options('*', cors());
 
 //Connect to dbms
-mongoose.connect('mongodb+srv://user_0:papponi312@cluster0-vq45a.mongodb.net/calendarDB', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb+srv://user_0:papponi312@cluster0-vq45a.mongodb.net/calendarDB', { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 
 //Get Models
 require('./models/task-model');
@@ -18,7 +20,7 @@ app.use(
 		extended: true
 	})
 );
-// app.use(cors());
+
 app.use(express.json());
 
 //fire controller
