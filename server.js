@@ -1,13 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
 const cors = require('cors');
+
+const app = express();
 
 //Connect to dbms
 mongoose.connect('mongodb+srv://user_0:papponi312@cluster0-vq45a.mongodb.net/calendarDB', { useUnifiedTopology: true, useNewUrlParser: true });
 
 //Get Models
-require('./models/professor-model');
+require('./models/task-model');
 
 //Get Controllers
 const taskController = require('./controllers/task-controller');
@@ -17,12 +18,11 @@ app.use(
 		extended: true
 	})
 );
-
+// app.use(cors());
 app.use(express.json());
-app.use(cors());
 
 //fire controller
-// app.use(profController);
+app.use(taskController);
 
 //general routes
 
