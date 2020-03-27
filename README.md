@@ -14,6 +14,6 @@ This is the Backend part of the Application, instructions from here must be comp
 4. While still in terminal, type in, "npm run development"
 5. Go to the [Frontend](https://github.com/hotmailbelike/mern-calendar-frontend) part of the Application and complete the instructions given there
 
-<br/><br/>
+<br/>
 
 **[Click here to go the Frontend Repository](https://github.com/hotmailbelike/mern-calendar-frontend)**
