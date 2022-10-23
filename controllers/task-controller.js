@@ -15,7 +15,7 @@ router.post('/calendarApp', async (req, res) => {
 	} catch (error) {
 		// console.log(error);
 		return res.status(400).json({
-			error
+			error,
 		});
 	}
 });
@@ -23,13 +23,17 @@ router.post('/calendarApp', async (req, res) => {
 //edit task
 router.put('/calendarApp/:taskId', async (req, res) => {
 	try {
-		let task = await Task.findByIdAndUpdate(req.params.taskId, req.body, { new: true, runValidators: true, useFindAndModify: false });
+		let task = await Task.findByIdAndUpdate(req.params.taskId, req.body, {
+			new: true,
+			runValidators: true,
+			useFindAndModify: false,
+		});
 
 		await task.save();
 		res.json(task);
 	} catch (error) {
 		return res.status(400).json({
-			error
+			error,
 		});
 	}
 });
@@ -37,11 +41,13 @@ router.put('/calendarApp/:taskId', async (req, res) => {
 // delete task
 router.delete('/calendarApp/:taskId', async (req, res) => {
 	try {
-		let task = await Task.findByIdAndRemove(req.params.taskId, { useFindAndModify: false });
+		let task = await Task.findByIdAndRemove(req.params.taskId, {
+			useFindAndModify: false,
+		});
 		res.json(task);
 	} catch (error) {
 		return res.status(400).json({
-			error
+			error,
 		});
 	}
 });
@@ -53,9 +59,40 @@ router.get('/calendarApp/:taskId', async (req, res) => {
 		res.json(task);
 	} catch (error) {
 		return res.status(400).json({
-			error
+			error,
 		});
 	}
 });
 
+router.post('/calculate', async (req, res) => {
+	try {
+		const { num1, num2, operation } = req.body;
+		let acceptedOps = ['*', '+', '-'];
+		if (!acceptedOps.find((op) => op === operation)) {
+			return res
+				.status(400)
+				.json({ error: 'Please limit your operation to either "+", "-", or "*"' });
+		}
+
+		switch (operation) {
+			case '+':
+				return res.json({ result: num1 + num2 });
+				break;
+			case '-':
+				return res.json({ result: num1 - num2 });
+				break;
+			case '*':
+				return res.json({ result: num1 * num2 });
+				break;
+
+			default:
+				break;
+		}
+	} catch (error) {
+		console.error('error -> POST /calendarApp', error);
+		return res.status(400).json({
+			error,
+		});
+	}
+});
 module.exports = router;
