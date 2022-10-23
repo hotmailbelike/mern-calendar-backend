@@ -71,7 +71,11 @@ router.post('/calculate', async (req, res) => {
 		if (!acceptedOps.find((op) => op === operation)) {
 			return res
 				.status(400)
-				.json({ error: 'Please limit your operation to either "+", "-", or "*"' });
+				.json({ error: `Please limit your operation to either "+", "-", or "*"` });
+		}
+
+		if (typeof num1 !== 'number' || typeof num2 !== 'number') {
+			return res.status(400).json({ error: `Please enter numbers only` });
 		}
 
 		switch (operation) {
